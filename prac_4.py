@@ -111,6 +111,15 @@ def display_callback(DISPLAY):
 
     print("")
     #time.sleep(0.2)
+    
+    # Setup events for the buttons
+    # add rising-edge detection on a channel, ignoring further edges for 1s for switch debounce handling
+    GPIO.add_event_detect(RESET, GPIO.RISING, callback = reset_callback, bouncetime = 1000)
+    GPIO.add_event_detect(FREQUENCY, GPIO.RISING, callback = frequency_callback, bouncetime = 1000)
+    GPIO.add_event_detect(STOP, GPIO.RISING, callback = stop_callback, bouncetime = 1000)
+    GPIO.add_event_detect(DISPLAY, GPIO.RISING, callback = display_callback, bouncetime = 1000)
+    
+    
 =======
 # Define callback functions that are called when event occurs for push buttons
 def reset_callback(RESET):
