@@ -217,3 +217,24 @@ def display_callback(DISPLAY):
     print("")
     #time.sleep(0.2)
 >>>>>>> def-callbackfunction
+
+
+# Create a simple StopWatch function
+# The input for the function is for example: value = time.time()
+def StopWatch(value):
+    '''Converts from seconds to Days:Hours:Minutes:Seconds'''
+
+    valueD = (((value/365)/24)/60)
+    Days = int (valueD)
+
+    valueH = (valueD-Days)*365
+    Hours = int(valueH)
+
+    valueM = (valueH - Hours)*24
+    Minutes = int(valueM)
+
+    valueS = (valueM - Minutes)*60
+    Seconds = int(valueS)
+
+    timerStr = "%02d:%02d:%02d" % (Hours, Minutes, Seconds) # Format the string correctly
+    return (timerStr)
