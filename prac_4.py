@@ -65,7 +65,7 @@ DISPLAY = 6
 # Setup pushbuttons as GPIO digital inputs, in PULL-UP mode to avoid false detection (when pressed, pulls connection to ground)
 GPIO.setup([RESET, FREQUENCY, STOP, DISPLAY], GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-<<<<<<< HEAD
+
 # The frequency switch changes the frequency of the monitoring. The possible
 # frequencies are 500ms, 1s, 2s. The frequency must loop between those values per event occurrence
 def frequency_callback(FREQUENCY):
@@ -96,6 +96,25 @@ def frequency_callback(FREQUENCY):
 # The stop switch stops or starts the monitoring of the sensors - NB: by default, the system monitors the sensors so monitor = True
 # The timer is not affected by this functionality   
 
+# The stop switch stops or starts the monitoring of the sensors - NB: by default, the system monitors the sensors so monitor = True
+# The timer is not affected by this functionality    
+def stop_callback(STOP):
+    print("\nThe stop button was pressed")
+    
+    global stopbtncount
+    global monitor
+    
+    stopbtncount +=1
+    
+    if(stopbtncount%2 == 0):
+        monitor = True
+    else:                   # For odd number of btn presses
+        monitor = False
+
+    #print("The stop button was pressed this many times: ", stopbtncount)
+    print("State of monitor variable is: ", monitor)
+    print("")
+
 
 def display_callback(DISPLAY):
     print("The display button was pressed\n")
@@ -111,6 +130,7 @@ def display_callback(DISPLAY):
 
     print("")
     #time.sleep(0.2)
+
     
     # Setup events for the buttons
     # add rising-edge detection on a channel, ignoring further edges for 1s for switch debounce handling
@@ -185,39 +205,10 @@ def display_callback(DISPLAY):
         
 
 
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> def-callbackfunction
-=======
     print("")
     #time.sleep(0.2)
->>>>>>> def-callbackfunction
-<<<<<<< HEAD
+
+
 #--------------------------------------------------------------------------------------------------------------
 # Function to convert light data to percentage
 def ConvertPercent(light_level):
@@ -240,10 +231,6 @@ def ConvertTemp(data,places):
       temp = int(round(temp, places))
       return temp
 
-
-=======
-
-
 # Create a simple StopWatch function
 # The input for the function is for example: value = time.time()
 def StopWatch(value):
@@ -263,4 +250,3 @@ def StopWatch(value):
 
     timerStr = "%02d:%02d:%02d" % (Hours, Minutes, Seconds) # Format the string correctly
     return (timerStr)
->>>>>>> stopwatch-branch
