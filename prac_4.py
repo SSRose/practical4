@@ -184,6 +184,9 @@ def display_callback(DISPLAY):
         print(outerArray[i])
         
 
+
+
+
 <<<<<<< HEAD
 
 
