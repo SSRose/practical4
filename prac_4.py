@@ -95,6 +95,25 @@ def frequency_callback(FREQUENCY):
 # The stop switch stops or starts the monitoring of the sensors - NB: by default, the system monitors the sensors so monitor = True
 # The timer is not affected by this functionality   
 
+# The stop switch stops or starts the monitoring of the sensors - NB: by default, the system monitors the sensors so monitor = True
+# The timer is not affected by this functionality    
+def stop_callback(STOP):
+    print("\nThe stop button was pressed")
+    
+    global stopbtncount
+    global monitor
+    
+    stopbtncount +=1
+    
+    if(stopbtncount%2 == 0):
+        monitor = True
+    else:                   # For odd number of btn presses
+        monitor = False
+
+    #print("The stop button was pressed this many times: ", stopbtncount)
+    print("State of monitor variable is: ", monitor)
+    print("")
+
 
 def display_callback(DISPLAY):
     print("The display button was pressed\n")
