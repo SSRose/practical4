@@ -241,7 +241,6 @@ def ConvertTemp(data,places):
       return temp
 
 
-<<<<<<< HEAD
 GPIO.cleanup()
 '''
 except KeyboardInterrupt:
@@ -250,8 +249,6 @@ except KeyboardInterrupt:
 
 finally:
 	GPIO.cleanup()           # clean up GPIO on normal exit
-=======
->>>>>>> master
 =======
 
 
@@ -274,8 +271,4 @@ def StopWatch(value):
 
     timerStr = "%02d:%02d:%02d" % (Hours, Minutes, Seconds) # Format the string correctly
     return (timerStr)
-<<<<<<< HEAD
 >>>>>>> origin/stopwatch-branch
-=======
->>>>>>> stopwatch-branch
->>>>>>> master
