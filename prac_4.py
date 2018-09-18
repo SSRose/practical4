@@ -64,3 +64,28 @@ DISPLAY = 6
 
 # Setup pushbuttons as GPIO digital inputs, in PULL-UP mode to avoid false detection (when pressed, pulls connection to ground)
 GPIO.setup([RESET, FREQUENCY, STOP, DISPLAY], GPIO.IN, pull_up_down = GPIO.PUD_UP)
+
+# Define callback functions that are called when event occurs for push buttons
+def reset_callback(RESET):
+    #print("\nThe reset button was pressed. The timer has started")
+    
+    global start
+    
+    # Reset the timer
+    start = time.time()
+
+    # Clear the queue
+    outerArray = [0,0,0,0,0]
+
+    # Clear the console (by printing 50 blank lines)
+    #print("\n" *50)
+
+    # Clear the console using an os system call
+    # A simple and cross-platform solution is to use either the 'cls' command on Windows, or 'clear' on Unix systems
+    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('clear')
+
+    # Print column header each time the console is cleared
+    print('| {0:>4}     | {1:>4}    |{2:>4}   | {3:>4}  | {4:>4} |'.format(*col_header)) # Note that the spacing was adjusted so that it prints correctly
+
+
