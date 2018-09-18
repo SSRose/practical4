@@ -217,3 +217,26 @@ def display_callback(DISPLAY):
     print("")
     #time.sleep(0.2)
 >>>>>>> def-callbackfunction
+#--------------------------------------------------------------------------------------------------------------
+# Function to convert light data to percentage
+def ConvertPercent(light_level):
+    light_percent = (light_level/1023)*100
+    light_percent = int(round(light_percent, 0))
+    return light_percent
+
+# Function to convert data to voltage level,
+# rounded to specified number of decimal places.
+def ConvertVolts(data,places):
+  volts = (data * 3.3) / float(1023)
+  volts = round(volts,places)
+  return volts
+
+# Function to calculate temperature from
+# MCP9700A data, rounded to specified
+# number of decimal places.
+def ConvertTemp(data,places):
+      temp = ((data * 190)/float(1023))
+      temp = int(round(temp, places))
+      return temp
+
+
