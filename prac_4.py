@@ -88,4 +88,45 @@ def reset_callback(RESET):
     # Print column header each time the console is cleared
     print('| {0:>4}     | {1:>4}    |{2:>4}   | {3:>4}  | {4:>4} |'.format(*col_header)) # Note that the spacing was adjusted so that it prints correctly
 
+# The frequency switch changes the frequency of the monitoring. The possible
+# frequencies are 500ms, 1s, 2s. The frequency must loop between those values per event occurrence
+def frequency_callback(FREQUENCY):
+    print("\nThe frequency button was pressed")
+    
+    global freqcount
+    global delay
+    
+    freqcount += 1
+    
+    if(freqcount > 2): # Ensure that the counter does not exceed 3
+        freqcount = 0
 
+    # Cycle between the 3 frequency values
+    if (freqcount == 0):
+        delay = 0.5
+    elif(freqcount == 1):
+        delay = 1
+    elif(freqcount == 2):
+        delay = 2
+    else:
+        pass
+
+    #print("The frequency button was pressed this many times: ", freqcount)
+    print("The delay is currently set as this many seconds: ", delay)
+    print("")
+    
+# The display switch displays the first five reading since the stop switch was pressed
+def display_callback(DISPLAY):
+    print("The display button was pressed\n")
+
+    global outerArray
+    
+    for i in range(len(outerArray)):
+        #print('| {0:>4} | {1:>4} | {2:>4}V | {3:>4}C | {4:>4}% |'.format(*outerArray[i]))
+        # Find out from tutor why this method only prints the same thing (i.e the last element in outerArray) 5 times
+
+        print(outerArray[i])
+        
+
+    print("")
+    #time.sleep(0.2)
