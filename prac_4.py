@@ -241,15 +241,6 @@ def ConvertTemp(data,places):
       return temp
 
 
-GPIO.cleanup()
-'''
-except KeyboardInterrupt:
-	print("\nStopping Program\n")
-	GPIO.cleanup()       # clean up GPIO on CTRL+C exit
-
-finally:
-	GPIO.cleanup()           # clean up GPIO on normal exit
-=======
 
 
 # Create a simple StopWatch function
@@ -271,4 +262,79 @@ def StopWatch(value):
 
     timerStr = "%02d:%02d:%02d" % (Hours, Minutes, Seconds) # Format the string correctly
     return (timerStr)
->>>>>>> origin/stopwatch-branch
+
+# Thanos function populates a single row
+def Thanos():
+
+    global end
+    global timer
+    global innerArray
+    
+    end = time.time()         
+    timer = StopWatch(end-start)
+
+    # Format of innerArray = [Time, Timer, Pot, Temp, Light]
+    
+    innerArray[0] = time.strftime("%H:%M:%S", time.localtime())
+    innerArray[1] = timer
+
+    # The read_adc function will get the value of the specified channel (0-2)
+    innerArray[2] = mcp.read_adc(pot_channel)
+    innerArray[3] = mcp.read_adc(temp_channel)
+    innerArray[4] = mcp.read_adc(light_channel)
+
+
+    # Convert the pot data to voltage with one dec place
+    pot_level = innerArray[2]
+    innerArray[2] = ConvertVolts(pot_level,1)
+
+    # Convert the temp data to degrees celsius with zero dec places
+    temp_level = innerArray[3]
+    innerArray[3] = ConvertTemp(temp_level, 0)
+
+    # Convert the light data to percentage with zero dec places
+    light_level = innerArray[4]
+    inverted_light_level = 1023 - light_level
+    innerArray[4] = ConvertPercent(inverted_light_level)
+    '''NB: the LDR decreases the voltage if you increase the amount of light shining on it,
+    hence the reason for inverting the light_level reading'''
+
+
+    #print(innerArray)
+    return innerArray
+    
+
+#--------------------------------------------------------------
+# Start the timer as soon as the program starts
+start = time.time()
+
+# Print column header once as soon as the program starts
+print('| {0:>4}     | {1:>4}    |{2:>4}   | {3:>4}  | {4:>4} |'.format(*col_header)) # Note that the spacing was adjusted so that it prints correctly
+
+# Main program loop.
+while True:
+
+    while(monitor == True):
+        
+        temp = Thanos()
+        tempString = '| {0:>4} | {1:>4} | {2:>4}V | {3:>4}C | {4:>4}% |'.format(*temp)
+        print(tempString)
+
+        outerArray.insert(5, tempString)
+        outerArray.pop(0)
+        '''The above lines implement a FIFO queue. The insert command places the element at the end of the queue
+        and the pop command gets rid off the first element in the queue, thus ensuring that the queue always contains
+        the latest 5 lines for the table'''
+            
+        # Wait before repeating loop - this controls the frequency of monitoring the sensors
+        time.sleep(delay)
+
+GPIO.cleanup()
+'''
+except KeyboardInterrupt:
+	print("\nStopping Program\n")
+	GPIO.cleanup()       # clean up GPIO on CTRL+C exit
+
+finally:
+	GPIO.cleanup()           # clean up GPIO on normal exit
+'''
