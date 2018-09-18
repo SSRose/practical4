@@ -240,3 +240,11 @@ def ConvertTemp(data,places):
       return temp
 
 
+GPIO.cleanup()
+'''
+except KeyboardInterrupt:
+	print("\nStopping Program\n")
+	GPIO.cleanup()       # clean up GPIO on CTRL+C exit
+
+finally:
+	GPIO.cleanup()           # clean up GPIO on normal exit
